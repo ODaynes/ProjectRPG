@@ -19,7 +19,7 @@ public enum Move {
     private Effect effect;
     private Integer effectChance; // 0 - 100, representing 0% - 100%
 
-    Move(@NotNull String name, @NotNull String desc, @NotNull Integer power, @NotNull Type type, @NotNull Effect effect, @NotNull Integer effectChance) {
+    private Move(@NotNull String name, @NotNull String desc, @NotNull Integer power, @NotNull Type type, @NotNull Effect effect, @NotNull Integer effectChance) {
         this.name = name;
         this.desc = desc;
         this.power = power;
@@ -33,6 +33,23 @@ public enum Move {
             this.effectChance = 0;
         }
     }
+
+    /**
+     * Retrieve a Move object by providing a matching string name
+     *
+     * @param name The name of the effect to return
+     * @return The move matching the input string.
+     * @throws IllegalArgumentException If input string does not match existing Move name
+     */
+
+    public Effect getMoveByNameIgnoreCase(String name) throws IllegalArgumentException {
+        for(Effect effect: Effect.values()) {
+            if(effect.getName().equalsIgnoreCase(name)) return effect;
+        }
+        throw new IllegalArgumentException(String.format("Move with the name '%s' cannot be found.", name));
+    }
+
+    // getters and setters
 
     public String getName() {
         return name;

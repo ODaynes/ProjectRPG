@@ -13,7 +13,7 @@ public enum Effect {
     SLEEP("Sleep", "SLP"),
     CONFUSED("Confused", "CON");
 
-    Effect(String name, String abbreviation) {
+    private Effect(String name, String abbreviation) {
         this.name = name;
         this.abbreviation = abbreviation;
     }
@@ -21,9 +21,39 @@ public enum Effect {
     private String name;
     private String abbreviation;
 
-    public String getName() {
-        return name;
+    /**
+     * Retrieve an Effect object by providing a matching string name
+     *
+     * @param name The name of the effect to return
+     * @return The effect matching the input string.
+     * @throws IllegalArgumentException If input string does not match existing Effect name
+     */
+
+    public Effect getEffectByNameIgnoreCase(String name) throws IllegalArgumentException {
+        for(Effect effect: Effect.values()) {
+            if(effect.getName().equalsIgnoreCase(name)) return effect;
+        }
+        throw new IllegalAccessError(String.format("Effect object with name '%s' cannot be found.", name));
     }
+
+    /**
+     * Retrieve an Effect object by providing a matching string abbreviation
+     *
+     * @param abbreviation The abbreviation of the effect to return
+     * @return The effect matching the input string.
+     * @throws IllegalArgumentException If input string does not match existing Effect abbreviation
+     */
+
+    public Effect getEffectByAbbreviationIgnoreCase(String abbreviation) throws IllegalArgumentException {
+        for(Effect effect: Effect.values()) {
+            if(effect.getAbbreviation().equalsIgnoreCase(abbreviation)) return effect;
+        }
+        throw new IllegalArgumentException(String.format("Effect object with abbreviation '%s' cannot be found.", abbreviation));
+    }
+
+    // getters and setters
+
+    public String getName() { return name; }
 
     public void setName(String name) {
         this.name = name;

@@ -16,7 +16,6 @@ public enum Type {
     FIRE(   "Fire",     Arrays.asList(Type.GRASS),  Arrays.asList(Type.WATER),   EMPTY_TYPE_LIST,    Arrays.asList(Type.WATER),   Arrays.asList(Type.GRASS),  EMPTY_TYPE_LIST),
     WATER(  "Water",    Arrays.asList(Type.FIRE),   Arrays.asList(Type.GRASS),   EMPTY_TYPE_LIST,    Arrays.asList(Type.GRASS),   Arrays.asList(Type.FIRE),   EMPTY_TYPE_LIST),
     NORMAL( "Normal",   EMPTY_TYPE_LIST,            EMPTY_TYPE_LIST,             EMPTY_TYPE_LIST,    EMPTY_TYPE_LIST,             EMPTY_TYPE_LIST,            EMPTY_TYPE_LIST);
-
     // Damage multipliers
 
     private static final double SUPER_EFFECTIVE_MULTIPLIER = 2.0;
@@ -41,7 +40,7 @@ public enum Type {
 
     // Constructors
 
-    Type(@NotNull String name, @NotNull List<Type> superEffectiveTo, @NotNull List<Type> notVeryEffectiveTo, @NotNull List<Type> cannotDamage, @NotNull List<Type> superEffectiveFrom, @NotNull List<Type> notVeryEffectiveFrom, @NotNull List<Type> immunities) {
+    private Type(@NotNull String name, @NotNull List<Type> superEffectiveTo, @NotNull List<Type> notVeryEffectiveTo, @NotNull List<Type> cannotDamage, @NotNull List<Type> superEffectiveFrom, @NotNull List<Type> notVeryEffectiveFrom, @NotNull List<Type> immunities) {
         this.name = name;
 
         this.superEffectiveTo = superEffectiveTo;
@@ -51,7 +50,25 @@ public enum Type {
         this.superEffectiveFrom = superEffectiveFrom;
         this.notVeryEffectiveFrom = notVeryEffectiveFrom;
         this.immunities = immunities;
+
     }
+
+    /**
+     * Retrieve a Type object by providing a matching string name
+     *
+     * @param name The name of the type to return
+     * @return The type matching the input string.
+     * @throws IllegalArgumentException If input string does not match existing Type name
+     */
+
+    public static Type valueOfIgnoreCase(String name) throws IllegalArgumentException {
+        for(Type type: Type.values()) {
+            if(type.getName().equalsIgnoreCase(name)) return type;
+        }
+
+        throw new IllegalArgumentException(String.format("Type object with the name '%s' could not be found.", name));
+    }
+
 
     // getters and setters
 
